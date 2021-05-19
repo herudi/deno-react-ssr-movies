@@ -1,1 +1,1 @@
-web: deno run --allow-net --allow-read --allow-env --unstable server.tsx --port=${PORT}
+web: deno run --allow-net --allow-read --allow-env --unstable server.tsx --port=${PORT} --deno_env=production

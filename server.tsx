@@ -1,25 +1,33 @@
-import { Dero, HttpRequest, HttpResponse, staticFiles } from "./deps/deps-server.ts";
+import { Dero, HttpRequest, HttpResponse, staticFiles, parseFlag } from "./deps/deps-server.ts";
 import MovieController from './server/apps/MovieController.tsx';
 import { browserPath, cors, react } from './server/helpers/wares.ts';
-import { parse } from 'https://deno.land/std/flags/mod.ts';
 
-const { files } = await Deno.emit(
-    "./client.tsx",
-    {
-        check: false,
-        bundle: "esm",
-        compilerOptions: {
-            lib: ["dom", "dom.iterable", "esnext"],
+const env = parseFlag(Deno.args);
+const DENO_ENV = env.deno_env || "development";
+const DEFAULT_PORT = 3000;
+let emit = void 0 as any;
+
+if (DENO_ENV !== 'production') {
+    emit = await Deno.emit(
+        "./client.tsx",
+        {
+            check: false,
+            bundle: "esm",
+            compilerOptions: {
+                lib: ["dom", "dom.iterable", "esnext"],
+            }
         },
-    },
-);
+    );
+}
 
 class App extends Dero {
     constructor() {
         super();
         this.use(cors, react);
-        this.get(browserPath, (req, res) => {
-            const js = files["deno:///bundle.js"];
+        this.get(browserPath, async (req, res) => {
+            let js = "";
+            if (emit) js = emit.files["deno:///bundle.js"]; 
+            else js = await Deno.readTextFile("./public/client.min.js");
             res.type("application/javascript").body(js);
         });
         this.use("/assets", staticFiles("public", { etag: false }));
@@ -35,7 +43,4 @@ class App extends Dero {
     }
 }
 
-const DEFAULT_PORT = 8000;
-const argPort = parse(Deno.args).port;
-
-await new App().listen(argPort ? Number(argPort) : DEFAULT_PORT);
+await new App().listen(env.port ? Number(env.port) : DEFAULT_PORT);
