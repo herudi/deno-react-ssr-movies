@@ -1,6 +1,7 @@
 import { Dero, HttpRequest, HttpResponse, staticFiles } from "./deps/deps-server.ts";
 import MovieController from './server/apps/MovieController.tsx';
 import { browserPath, cors, react } from './server/helpers/wares.ts';
+import { parse } from 'https://deno.land/std/flags/mod.ts';
 
 const { files } = await Deno.emit(
     "./client.tsx",
@@ -34,4 +35,7 @@ class App extends Dero {
     }
 }
 
-await new App().listen(3000);
+const DEFAULT_PORT = 8000;
+const argPort = parse(Deno.args).port;
+
+await new App().listen(argPort ? Number(argPort) : DEFAULT_PORT);
