@@ -33,12 +33,13 @@ class MovieController {
     async exact(req: HttpRequest, res: HttpResponse, next: NextFunction) {
         const route: any = Routes.find(r => matchPath(req.url, r));
         if (route) {
+            let apiUrl = route.apiUrl;
             if (route.name === 'detail') {
-                route.apiUrl = route.apiUrl.replace(":id", req.params.wild[1]);
+                apiUrl = apiUrl.replace(":id", req.params.wild[1]);
             }
             let result = {} as any;
-            if (route.apiUrl) {
-                result = await movieService.getMovies(route.apiUrl, route?.seo);
+            if (apiUrl) {
+                result = await movieService.getMovies(apiUrl, route?.seo);
                 if (route.name === 'detail') {
                     result.seo = {
                         title: result.data.title,
