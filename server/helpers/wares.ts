@@ -25,7 +25,7 @@ export function react(req: HttpRequest, res: HttpResponse, next: NextFunction) {
                         <link href="/assets/loading.css" rel="stylesheet">
                         <script>
                             window.__INITIAL_DATA__ = ${JSON.stringify(res.locals)}
-                            window.BASE_URL = "https://deno-react-ssr.herokuapp.com";
+                            window.BASE_URL = "${req.getBaseUrl()}";
                         </script>
                     </head>
                     <body>
