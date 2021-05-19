@@ -5,6 +5,7 @@ import MovieController from './server/apps/MovieController.tsx';
 const env = parseFlag(Deno.args);
 const DENO_ENV = env.deno_env || "development";
 const DEFAULT_PORT = 3000;
+const BASE_URL = env.base_url || "http://localhost:" + DEFAULT_PORT;
 const template = await Deno.readTextFile("./public/template.html");
 let emit = void 0 as any;
 
@@ -24,7 +25,7 @@ if (DENO_ENV !== 'production') {
 class App extends Dero {
     constructor() {
         super();
-        this.use(react(template));
+        this.use(react(template, BASE_URL));
         this.get(browserPath, async (_, res) =>
             res.type("application/javascript").body(
                 emit ?
