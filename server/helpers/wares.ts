@@ -1,7 +1,7 @@
 import { NextFunction, HttpResponse, HttpRequest, ReactDOMServer } from "../../deps/deps-server.ts";
 import { React } from "../../deps/deps-client.ts";
 
-export const browserPath = '/client.js';
+export const browserPath = '/assets/app.js';
 
 type OptsCors = {
     allowOrigin?: string;
