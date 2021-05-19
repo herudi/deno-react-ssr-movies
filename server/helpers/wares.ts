@@ -22,11 +22,10 @@ export function react(req: HttpRequest, res: HttpResponse, next: NextFunction) {
                         <title>${res.locals.seo?.title || 'Home'}</title>
                         <meta name="description" content="${res.locals.seo?.desc || 'None'}">
                         <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-                        <link href="${req.getBaseUrl()}/assets/loading.css" rel="stylesheet">
-                        
+                        <link href="/assets/loading.css" rel="stylesheet">
                         <script>
                             window.__INITIAL_DATA__ = ${JSON.stringify(res.locals)}
-                            window.BASE_URL = "${req.getBaseUrl()}";
+                            window.BASE_URL = "https://deno-react-ssr.herokuapp.com";
                         </script>
                     </head>
                     <body>
