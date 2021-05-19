@@ -1,14 +1,16 @@
-import { Dero, HttpRequest, HttpResponse, staticFiles, parseFlag } from "./deps/deps-server.ts";
+import { Dero, staticFiles, parseFlag } from "./deps/deps-server.ts";
 import MovieController from './server/apps/MovieController.tsx';
 import { browserPath, cors, react } from './server/helpers/wares.ts';
 
 const env = parseFlag(Deno.args);
 const DENO_ENV = env.deno_env || "development";
 const DEFAULT_PORT = 3000;
-let emit = void 0 as any;
+let jsClient = "";
 
-if (DENO_ENV !== 'production') {
-    emit = await Deno.emit(
+if (DENO_ENV === 'production') {
+    jsClient = await Deno.readTextFile("./public/client.min.js");
+} else {
+    const { files } = await Deno.emit(
         "./client.tsx",
         {
             check: false,
@@ -18,28 +20,16 @@ if (DENO_ENV !== 'production') {
             }
         },
     );
+    jsClient = files["deno:///bundle.js"];
 }
 
 class App extends Dero {
     constructor() {
         super();
         this.use(cors, react);
-        this.get(browserPath, async (req, res) => {
-            let js = "";
-            if (emit) js = emit.files["deno:///bundle.js"]; 
-            else js = await Deno.readTextFile("./public/client.min.js");
-            res.type("application/javascript").body(js);
-        });
+        this.get(browserPath, (_, res) => res.type("application/javascript").body(jsClient));
         this.use("/assets", staticFiles("public", { etag: false }));
         this.use({ class: [MovieController] });
-        this.use((err: any, req: HttpRequest, res: HttpResponse) => {
-            let code = err.status || 500;
-            if (typeof code !== "number") code = 500;
-            return res.status(code).body({
-                statusCode: code,
-                message: err.message || 'Unknown Error'
-            });
-        });
     }
 }
 

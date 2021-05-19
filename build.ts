@@ -1,5 +1,7 @@
 import { parse, print } from "https://x.nest.land/swc@0.0.6/mod.ts";
 
+console.log("Building client js .....");
+
 const { files } = await Deno.emit(
     "./client.tsx",
     {

@@ -10,30 +10,18 @@ export function cors(req: HttpRequest, res: HttpResponse, next: NextFunction) {
     next();
 }
 
-export function react(req: HttpRequest, res: HttpResponse, next: NextFunction) {
+export async function react(req: HttpRequest, res: HttpResponse, next: NextFunction) {
+    let template = await Deno.readTextFile(`${Deno.cwd()}/public/template.html`);
     res.return.push((Elem) => {
         if (React.isValidElement(Elem)) {
             res.type("text/html");
             const content = (ReactDOMServer as any).renderToString(Elem);
-            return `
-                <html>
-                    <head>
-                        <meta name='viewport' content='width=device-width,minimum-scale=1,maximum-scale=1'>
-                        <title>${res.locals.seo?.title || 'Home'}</title>
-                        <meta name="description" content="${res.locals.seo?.desc || 'None'}">
-                        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-                        <link href="/assets/loading.css" rel="stylesheet">
-                        <script>
-                            window.__INITIAL_DATA__ = ${JSON.stringify(res.locals)}
-                            window.BASE_URL = "${req.getBaseUrl()}";
-                        </script>
-                    </head>
-                    <body>
-                        <div id="root">${content}</div>
-                        <script src="${browserPath}" defer></script>
-                    </body>
-                </html>
-            `;
+            return template
+                .replace("{{title}}", res.locals.seo?.title || 'Home')
+                .replace("{{description}}", res.locals.seo?.desc || 'None')
+                .replace("{{content}}", content)
+                .replace("{{client_script}}", `<script src="${browserPath}" defer></script>`)
+                .replace("{{window_script}}", `<script>window.__INITIAL_DATA__ = ${JSON.stringify(res.locals)}; window.BASE_URL = "${req.getBaseUrl()}";</script>`);
         }
         return;
     });
