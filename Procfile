@@ -1,0 +1,1 @@
+web: deno run --allow-net=":8001" --allow-read --allow-env --unstable server.tsx
