@@ -5,6 +5,7 @@ console.log("Building client js .....");
 const { files } = await Deno.emit(
     "./client.tsx",
     {
+        check: false,
         bundle: "esm",
         compilerOptions: {
             lib: ["dom", "dom.iterable", "esnext"],
