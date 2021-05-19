@@ -1,5 +1,6 @@
 import { Controller, Get, HttpRequest, HttpResponse, NextFunction, Wares } from "../../deps/deps-server.ts";
 import MovieService from "./MovieService.ts";
+import { cors } from "../helpers/wares.ts";
 import Routes from './../../routes.tsx';
 import { React, ReactRouterDom } from './../../deps/deps-client.ts';
 import App from './../../app.tsx';
@@ -10,6 +11,7 @@ const movieService: MovieService = new MovieService();
 @Controller()
 class MovieController {
 
+    @Wares(cors())
     @Get("/api/movie/:id")
     async getDetail(req: HttpRequest) {
         let result = await movieService.getMovies(req.url);
@@ -20,6 +22,7 @@ class MovieController {
         return result;
     }
 
+    @Wares(cors())
     @Get("/api/movie/popular")
     async getPopular(req: HttpRequest) {
         const route: any = Routes.find(r => r.apiUrl === req.url);
