@@ -1,4 +1,4 @@
-import { Dero, parseFlag } from "./deps/deps-server.ts";
+import { Dero, parseFlag, staticFiles } from "./deps/deps-server.ts";
 import { browserPath, react } from './server/helpers/wares.ts';
 import MovieController from './server/apps/MovieController.tsx';
 
@@ -26,16 +26,12 @@ class App extends Dero {
     constructor() {
         super();
         this.use(react(template, BASE_URL));
+        this.use("/assets", staticFiles("public"));
         this.get(browserPath, async (_, res) =>
             res.type("application/javascript").body(
                 emit ?
                     emit.files["deno:///bundle.js"] :
-                    await Deno.readFile("./public/client.min.js")
-            )
-        );
-        this.get("/assets/loading.css", async (_, res) =>
-            res.type("text/css; charset=utf-8").body(
-                await Deno.readFile("./public/loading.css")
+                    await Deno.readFile("./public/bundle.js")
             )
         );
         this.use({ class: [MovieController] });

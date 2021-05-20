@@ -19,7 +19,7 @@ export function cors(opts = {} as OptsCors) {
 }
 
 export function react(template: string, base_url: string) {
-    return async (req: HttpRequest, res: HttpResponse, next: NextFunction) => {
+    return (req: HttpRequest, res: HttpResponse, next: NextFunction) => {
         res.return.push((Elem) => {
             if (React.isValidElement(Elem)) {
                 res.type("text/html");

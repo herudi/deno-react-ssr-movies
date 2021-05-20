@@ -23,6 +23,7 @@ deno run --allow-net --allow-read --unstable server.tsx --deno_env=production
 
 ## Include Libs
 * [Dero](https://github.com/herudi/dero)
+* [StaticFiles](https://github.com/herudi/static-files)
 * [React](https://dev.jspm.io/react@17.0.2)
 * [ReactDOM](https://dev.jspm.io/react-dom@17.0.2)
 * [ReactDOMServer](https://dev.jspm.io/react-dom@17.0.2/server)

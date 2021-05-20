@@ -24,7 +24,7 @@ class MovieController {
 
     @Wares(cors())
     @Get("/api/movie/popular")
-    async getPopular(req: HttpRequest) {
+    getPopular(req: HttpRequest) {
         const route: any = Routes.find(r => r.apiUrl === req.url);
         return movieService.getMovies(req.url, route?.seo);
     }
