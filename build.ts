@@ -5,7 +5,7 @@ console.log("Bundling client js .....");
 const { files } = await Deno.emit(
     "./client.tsx",
     {
-        bundle: "esm",
+        bundle: "module",
         compilerOptions: {
             lib: ["dom", "dom.iterable", "esnext"],
         }

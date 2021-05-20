@@ -2,6 +2,8 @@
 Deno react SSR with react-router-dom and Dero micro framework.
 > By default dero use native HTTP/2 Hyper Deno. this is so fast.
 
+> Deno version 1.10.2
+
 DEMO => [https://deno-react-ssr.herokuapp.com](https://deno-react-ssr.herokuapp.com)
 
 ## Install and run development
@@ -14,7 +16,7 @@ deno run --allow-net --allow-read --unstable server.tsx
 ## Build and production
 ### Build Client React
 ```bash
-deno run --allow-read --allow-write --unstable build.ts
+deno run --allow-net --allow-read --allow-write --unstable build.ts
 ```
 ### Run Production
 ```bash

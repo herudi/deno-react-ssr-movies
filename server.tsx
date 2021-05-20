@@ -14,7 +14,7 @@ if (DENO_ENV !== 'production') {
         "./client.tsx",
         {
             check: false,
-            bundle: "esm",
+            bundle: "module",
             compilerOptions: {
                 lib: ["dom", "dom.iterable", "esnext"],
             }
