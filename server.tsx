@@ -1,11 +1,8 @@
-import { Dero, parseFlag, staticFiles } from "./deps/deps-server.ts";
-import { browserPath, react } from './server/helpers/wares.ts';
+import { Dero, staticFiles } from "./deps/deps-server.ts";
+import { react } from './server/helpers/wares.ts';
 import MovieController from './server/apps/MovieController.tsx';
+import { BROWSER_PATH, PORT, DENO_ENV } from './constant.ts';
 
-const env = parseFlag(Deno.args);
-const DENO_ENV = env.deno_env || "development";
-const DEFAULT_PORT = 3000;
-const BASE_URL = env.base_url || "http://localhost:" + DEFAULT_PORT;
 const template = await Deno.readTextFile("./public/template.html");
 let emit = void 0 as any;
 
@@ -25,17 +22,14 @@ if (DENO_ENV !== 'production') {
 class App extends Dero {
     constructor() {
         super();
-        this.use(react(template, BASE_URL));
+        this.use(react(template));
         this.use("/assets", staticFiles("public"));
-        this.get(browserPath, async (_, res) =>
-            res.type("application/javascript").body(
-                emit ?
-                    emit.files["deno:///bundle.js"] :
-                    await Deno.readFile("./public/bundle.js")
-            )
-        );
+        if (emit) this.get(BROWSER_PATH, (_, res) => res.type("application/javascript").body(emit.files["deno:///bundle.js"]));
         this.use({ class: [MovieController] });
     }
 }
 
-await new App().listen(env.port ? Number(env.port) : DEFAULT_PORT);
+await new App().listen(PORT, (err, opts) => {
+    if (err) console.log(err);
+    console.log("> Running on port " + opts?.port);
+});
