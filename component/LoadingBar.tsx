@@ -1,6 +1,6 @@
 import { React } from './../deps/deps-client.ts';
 
-const LoadingBar = ({loading}: any) => {
+export const LoadingBar = ({loading}: any) => {
     return (
         loading ? 
         <div className="center-div-loading">
@@ -11,5 +11,3 @@ const LoadingBar = ({loading}: any) => {
         </div> : null
     )
 }
-
-export default LoadingBar;

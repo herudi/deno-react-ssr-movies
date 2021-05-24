@@ -1,10 +1,10 @@
 import { React, ReactRouterDom } from "./../deps/deps-client.ts";
 import { initLoad } from "../utils/helpers.ts";
-import LoadingBar from './../component/LoadingBar.tsx';
+import { LoadingBar } from './../component/LoadingBar.tsx';
 
 const { useParams } = ReactRouterDom;
 
-const Detail = ({ initData }: any) => {
+export const Detail = ({ initData }: any) => {
     const [data, setData] = React.useState(initData.data || {});
     const [loading, setLoading] = React.useState(false);
     const { id } = useParams();
@@ -40,5 +40,3 @@ const Detail = ({ initData }: any) => {
         </>
     )
 }
-
-export default Detail;

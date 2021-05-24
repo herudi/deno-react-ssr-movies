@@ -1,7 +1,7 @@
 import { React } from "./../deps/deps-client.ts";
 import { initLoad } from "../utils/helpers.ts";
 
-const Pricing = () => {
+export const Pricing = () => {
 
     React.useEffect(() => initLoad(), []);
 
@@ -201,5 +201,3 @@ const Pricing = () => {
         </>
     )
 }
-
-export default Pricing;

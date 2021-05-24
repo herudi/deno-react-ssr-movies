@@ -1,6 +1,6 @@
 import { React } from './../deps/deps-client.ts';
 
-const Footer = () => {
+export const Footer = () => {
     return (
         <footer className="text-gray-400 bg-gray-900 body-font">
             <div className="container px-5 py-24 mx-auto">
@@ -131,5 +131,3 @@ const Footer = () => {
         </footer>
     )
 }
-
-export default Footer;

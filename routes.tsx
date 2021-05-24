@@ -1,9 +1,9 @@
-import Home from './page/Home.tsx';
-import Detail from './page/Detail.tsx';
-import Galery from './page/Galery.tsx';
-import Pricing from './page/Pricing.tsx';
+import { Home } from './page/Home.tsx';
+import { Detail } from './page/Detail.tsx';
+import { Galery } from './page/Galery.tsx';
+import { Pricing } from './page/Pricing.tsx';
 
-const Routes = [
+export const Routes = [
     {
         path: '/',
         name: 'home',
@@ -42,7 +42,5 @@ const Routes = [
             desc: 'Sample page pricing'
         }
     },
-    
-];
 
-export default Routes;
+];

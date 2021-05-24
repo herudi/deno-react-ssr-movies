@@ -6,7 +6,7 @@ function activeMenu(pathname: string, current: string) {
     return pathname === current ? 'bg-gray-900 ' : '';
 }
 
-const Navbar = () => {
+export const Navbar = () => {
     const location = useLocation();
 
     return (
@@ -47,5 +47,3 @@ const Navbar = () => {
         </nav>
     )
 }
-
-export default Navbar;

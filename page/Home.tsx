@@ -1,10 +1,10 @@
 import { React, ReactRouterDom } from "./../deps/deps-client.ts";
 import { initLoad } from "../utils/helpers.ts";
-import LoadingBar from './../component/LoadingBar.tsx';
+import { LoadingBar } from './../component/LoadingBar.tsx';
 
 const { Link } = ReactRouterDom;
 
-const Home = ({ initData }: any) => {
+export const Home = ({ initData }: any) => {
     const [datas, setDatas] = React.useState(initData.data?.results || []);
     const [loading, setLoading] = React.useState(false);
 
@@ -68,4 +68,3 @@ const Home = ({ initData }: any) => {
         </>
     );
 }
-export default Home;

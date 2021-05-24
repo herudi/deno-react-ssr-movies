@@ -1,8 +1,8 @@
 import { React, ReactRouterDom } from "./deps/deps-client.ts";
-import Routes from './routes.tsx';
-import Navbar from './component/Navbar.tsx';
-import Footer from './component/Footer.tsx';
-import LoadingBar from './component/LoadingBar.tsx';
+import { Routes } from './routes.tsx';
+import { Navbar } from './component/Navbar.tsx';
+import { Footer } from './component/Footer.tsx';
+import { LoadingBar } from './component/LoadingBar.tsx';
 
 const { Switch, Route, useLocation } = ReactRouterDom;
 
@@ -17,7 +17,7 @@ function ScrollToTop() {
     return null;
 }
 
-const App = ({ isServer, Component, initData }: any) => {
+export const App = ({ isServer, Component, initData }: any) => {
 
     if (isServer) return (
         <>
@@ -46,5 +46,3 @@ const App = ({ isServer, Component, initData }: any) => {
         </React.Suspense>
     );
 }
-
-export default App;

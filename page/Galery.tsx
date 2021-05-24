@@ -1,7 +1,7 @@
 import { React } from "./../deps/deps-client.ts";
 import { initLoad } from "../utils/helpers.ts";
 
-const Galery = () => {
+export const Galery = () => {
 
     React.useEffect(() => initLoad(), []);
 
@@ -61,4 +61,3 @@ const Galery = () => {
     )
 }
 
-export default Galery;
