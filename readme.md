@@ -16,7 +16,7 @@ deno run --allow-net --allow-read --unstable server.tsx
 ## Build and production
 ### Build Client React
 ```bash
-deno run --allow-net --allow-read --allow-write --unstable build.ts
+deno run --allow-net --allow-read --allow-write --allow-env --unstable build.ts
 ```
 ### Run Production
 ```bash
