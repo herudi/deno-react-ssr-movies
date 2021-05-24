@@ -19,7 +19,7 @@ if (DENO_ENV !== 'production') {
     );
 }
 
-class App extends Dero {
+class Server extends Dero {
     constructor() {
         super();
         this.use(react(template));
@@ -29,7 +29,7 @@ class App extends Dero {
     }
 }
 
-await new App().listen(PORT, (err, opts) => {
+await new Server().listen(PORT, (err, opts) => {
     if (err) console.log(err);
     console.log("> Running on port " + opts?.port);
 });
