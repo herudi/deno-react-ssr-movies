@@ -6,14 +6,7 @@ export async function apiClient(url: string) {
     return data;
 }
 
-export async function initLoad(url?: string, setLoading?: Function) {
-    if ((window as any).__INITIAL_DATA__) {
-        //@ts-ignore
-        document.title = (window as any).__INITIAL_DATA__.seo.title;
-        delete (window as any).__INITIAL_DATA__;
-        return void 0;
-    }
-    if (url === void 0) return url;
+export async function initLoad(url: string, setLoading?: Function) {
     if (setLoading) setLoading(true);
     let _data = await apiClient(url as string);
     if (setLoading) setLoading(false);

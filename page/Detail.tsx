@@ -5,18 +5,16 @@ import { LoadingBar } from './../component/LoadingBar.tsx';
 const { useParams } = ReactRouterDom;
 
 export const Detail = ({ initData }: any) => {
-    const [data, setData] = React.useState(initData.data || {});
+    const [data, setData] = React.useState(initData?.data || {});
     const [loading, setLoading] = React.useState(false);
     const { id } = useParams();
 
     React.useEffect(() => {
         const init = async () => {
             let result = await initLoad("/api/movie/" + id, setLoading);
-            if (result) {
-                setData(result.data || {});
-            }
+            setData(result?.data || {});
         }
-        init();
+        if (!initData) init();
     }, []);
     return (
         <>

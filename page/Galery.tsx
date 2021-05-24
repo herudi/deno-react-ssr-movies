@@ -1,10 +1,6 @@
 import { React } from "./../deps/deps-client.ts";
-import { initLoad } from "../utils/helpers.ts";
 
 export const Galery = () => {
-
-    React.useEffect(() => initLoad(), []);
-
     return (
         <>
             <section className="text-gray-400 bg-gray-900 body-font">

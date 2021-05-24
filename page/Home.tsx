@@ -5,17 +5,15 @@ import { LoadingBar } from './../component/LoadingBar.tsx';
 const { Link } = ReactRouterDom;
 
 export const Home = ({ initData }: any) => {
-    const [datas, setDatas] = React.useState(initData.data?.results || []);
+    const [datas, setDatas] = React.useState(initData?.data?.results || []);
     const [loading, setLoading] = React.useState(false);
 
     React.useEffect(() => {
         const init = async () => {
             let result = await initLoad("/api/movie/popular", setLoading);
-            if (result) {
-                setDatas(result.data?.results || []);
-            }
+            setDatas(result?.data?.results || []);
         }
-        init();
+        if (!initData) init();
     }, []);
     return (
         <>
@@ -63,8 +61,6 @@ export const Home = ({ initData }: any) => {
                     </div>
                 </div>
             </section>
-
-
         </>
     );
 }

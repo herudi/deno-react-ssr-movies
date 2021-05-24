@@ -37,7 +37,16 @@ export const App = ({ isServer, Component, initData }: any) => {
                         {...el}
                         key={x}
                         component={(props: any) => {
-                            return <el.component {...props} initData={initData} />;
+                            let _initData;
+                            if ((window as any).__INITIAL_DATA__) {
+                                _initData = initData;
+                                delete (window as any).__INITIAL_DATA__;
+                            }
+                            if (el.seo) {
+                                //@ts-ignore
+                                document.title = el.seo.title;
+                            }
+                            return <el.component {...props} initData={_initData} />;
                         }}
                     />
                 })}
