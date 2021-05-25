@@ -30,4 +30,4 @@ deno run --allow-net --allow-read --unstable server.tsx --deno_env=production
 * [ReactDOM](https://dev.jspm.io/react-dom@17.0.2)
 * [ReactDOMServer](https://dev.jspm.io/react-dom@17.0.2/server)
 * [React Router Dom](https://dev.jspm.io/react-router-dom@5.2.0)
-* [swc](https://x.nest.land/swc@0.0.6)
+* [Bundler](https://deno.land/x/bundler)
