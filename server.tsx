@@ -31,7 +31,4 @@ export class Server extends Dero {
 
 const server = new Server();
 await server.prepare('local');
-server.listen(3000, (err, opts) => {
-    if (err) console.log(err);
-    console.log("> Running on port " + opts?.port);
-});
+server.deploy();
