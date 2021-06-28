@@ -30,5 +30,5 @@ export class Server extends Dero {
 }
 
 const server = new Server();
-await server.prepare('local');
-server.deploy();
+await server.prepare('deploy');
+server.deploy()
