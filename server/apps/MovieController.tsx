@@ -1,4 +1,4 @@
-import { Controller, Get, HttpRequest, HttpResponse, NextFunction, Wares } from "../../deps/deps-server.ts";
+import { BaseController, Controller, Get, Inject, Wares } from "../../deps/deps-server.ts";
 import MovieService from "./MovieService.ts";
 import { cors } from "../helpers/wares.ts";
 import { Routes } from './../../routes.tsx';
@@ -6,15 +6,18 @@ import { React, ReactRouterDom } from './../../deps/deps-client.ts';
 import { App } from './../../app.tsx';
 
 const { StaticRouter, matchPath } = ReactRouterDom;
-const movieService: MovieService = new MovieService();
 
 @Controller()
-class MovieController {
+class MovieController extends BaseController {
+
+    @Inject(MovieService)
+    private readonly movieService!: MovieService;
 
     @Wares(cors())
     @Get("/api/movie/:id")
-    async getDetail(req: HttpRequest) {
-        let result = await movieService.getMovies(req.url);
+    async getDetail() {
+        const req = this.request;
+        let result = await this.movieService.getMovies(req.url);
         result.seo = {
             title: result.data.title,
             desc: result.data.overview,
@@ -24,13 +27,16 @@ class MovieController {
 
     @Wares(cors())
     @Get("/api/movie/popular")
-    getPopular(req: HttpRequest) {
+    getPopular() {
+        const req = this.request;
         const route: any = Routes.find(r => r.apiUrl === req.url);
-        return movieService.getMovies(req.url, route?.seo);
+        return this.movieService.getMovies(req.url, route?.seo);
     }
 
     @Get("/*")
-    async exact(req: HttpRequest, res: HttpResponse, next: NextFunction) {
+    async exact() {
+        const req = this.request;
+        const res = this.response;
         const route: any = Routes.find(r => matchPath(req.url, r));
         if (route) {
             let apiUrl = route.apiUrl;
@@ -39,7 +45,7 @@ class MovieController {
             }
             let result = {} as any;
             if (apiUrl) {
-                result = await movieService.getMovies(apiUrl, route?.seo);
+                result = await this.movieService.getMovies(apiUrl, route?.seo);
                 if (route.name === 'detail') {
                     result.seo = {
                         title: result.data.title,
